@@ -8,6 +8,8 @@ import android.widget.Toast;
 import com.example.architectureexample.note.Note;
 import com.example.architectureexample.note.NoteDao;
 
+import java.util.UUID;
+
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
@@ -53,9 +55,9 @@ public abstract class AppDatabase extends RoomDatabase {
         protected Void doInBackground(Void... voids) {
             Log.i(LOG_TAG, "Populating App Database...");
 
-            noteDao.insert(new Note("Title 1", "Description 1", 1));
-            noteDao.insert(new Note("Title 2", "Description 2", 2));
-            noteDao.insert(new Note("Title 3", "Description 3", 3));
+            noteDao.insert(new Note("Title 1", "Description 1", 1, UUID.randomUUID().toString()));
+            noteDao.insert(new Note("Title 2", "Description 2", 2, UUID.randomUUID().toString()));
+            noteDao.insert(new Note("Title 3", "Description 3", 3, UUID.randomUUID().toString()));
             return null;
         }
     }
