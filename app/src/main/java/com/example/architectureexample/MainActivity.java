@@ -1,0 +1,31 @@
+package com.example.architectureexample;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+
+import com.example.architectureexample.note.ui.list.NoteListActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
+
+    private Handler handler;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        handler=new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent=new Intent(MainActivity.this, NoteListActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        },1000);
+    }
+}
