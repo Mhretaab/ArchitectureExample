@@ -26,6 +26,7 @@ import com.example.architectureexample.note.NoteAdapter;
 import com.example.architectureexample.note.NoteViewModel;
 
 import java.util.List;
+import java.util.UUID;
 
 public class NoteListFragment extends Fragment {
     private static final String LOG_TAG = NoteListFragment.class.getSimpleName();
@@ -68,6 +69,10 @@ public class NoteListFragment extends Fragment {
 
         noteViewModel.getAllNotes().observe(this, (@Nullable List<Note> notes)->{
             adapter.setNotes(notes);
+        });
+
+        noteViewModel.findByUuid(UUID.randomUUID().toString()).observe(this, (@NonNull Note note)->{
+
         });
     }
 

@@ -109,6 +109,10 @@ public class NoteViewModel extends AndroidViewModel {
                     }
                 });
     }
+
+    public LiveData<Note> findByUuid(String uuid){
+        return noteRepository.findByUuid(uuid);
+    }
  
     public LiveData<List<Note>> getAllNotes() {
         return allNotes;

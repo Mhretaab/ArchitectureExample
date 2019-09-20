@@ -1,20 +1,29 @@
 package com.example.architectureexample.note;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "note_table")
+@Entity(
+        tableName = "note_table",
+        indices = {@Index(value = "uuid", unique = true), @Index("title")}
+)
 public class Note {
  
     @PrimaryKey(autoGenerate = true)
     private int id;
- 
+
+    @ColumnInfo(name = "title")
     private String title;
- 
+
+    @ColumnInfo(name = "description")
     private String description;
- 
+
+    @ColumnInfo(name = "priority")
     private int priority;
 
+    @ColumnInfo(name = "uuid")
     private String uuid;
  
     public Note(String title, String description, int priority, String uuid) {
