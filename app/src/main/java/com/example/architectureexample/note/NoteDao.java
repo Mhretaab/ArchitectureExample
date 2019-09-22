@@ -1,32 +1,27 @@
 package com.example.architectureexample.note;
 
-import java.util.List;
-
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.Update;
+
+import com.example.architectureexample.common.db.BaseDao;
+
+import java.util.List;
+
+import io.reactivex.Completable;
+import io.reactivex.Single;
 
 @Dao
-public interface NoteDao {
+public interface NoteDao extends BaseDao<Note> {
+    @Query("DELETE FROM note")
+    Completable deleteAllNotes();
  
-    @Insert
-    void insert(Note note);
- 
-    @Update
-    void update(Note note);
- 
-    @Delete
-    void delete(Note note);
- 
-    @Query("DELETE FROM note_table")
-    void deleteAllNotes();
- 
-    @Query("SELECT * FROM note_table ORDER BY priority DESC")
+    @Query("SELECT * FROM note ORDER BY priority DESC")
     LiveData<List<Note>> getAllNotes();
 
-    @Query("SELECT * FROM note_table WHERE uuid = :uuid")
-    LiveData<Note> findByUuid(String uuid);
+    @Query("SELECT * FROM note WHERE uuid = :uuid")
+    Single<Note> findByUuid(String uuid);
+
+    @Query("SELECT * FROM note_detail")
+    LiveData<List<NoteDetail>> findAllNoteDetail();
 }

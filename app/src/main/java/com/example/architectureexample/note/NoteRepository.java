@@ -1,18 +1,23 @@
 package com.example.architectureexample.note;
 
 import android.app.Application;
-import android.os.AsyncTask;
+import android.util.Log;
 
-import com.example.architectureexample.common.AppDatabase;
+import androidx.lifecycle.LiveData;
+
+import com.example.architectureexample.common.db.AppDatabase;
 
 import java.util.List;
 
-import androidx.lifecycle.LiveData;
-import io.reactivex.Completable;
-import io.reactivex.CompletableEmitter;
-import io.reactivex.CompletableOnSubscribe;
+import io.reactivex.CompletableObserver;
+import io.reactivex.Single;
+import io.reactivex.SingleObserver;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class NoteRepository {
+    private static final String LOG_TAG = NoteRepository.class.getSimpleName();
+
     private NoteDao noteDao;
     private LiveData<List<Note>> allNotes;
  
@@ -22,59 +27,81 @@ public class NoteRepository {
         allNotes = noteDao.getAllNotes();
     }
  
-    public Completable insert(final Note note) {
-        return Completable.create((CompletableEmitter emitter)->{
-            try {
-                noteDao.insert(note);
-                if(!emitter.isDisposed())
-                    emitter.onComplete();
-            }catch (Throwable throwable){
-                if(!emitter.isDisposed())
-                    emitter.onError(throwable);
-            }
-        });
+    public void insert(final Note note) {
+        noteDao.insert(note)
+                .subscribeOn(Schedulers.io())
+                /*.observeOn(AndroidSchedulers.mainThread())*/
+                .subscribe(new SingleObserver<Long>() {
+                    @Override
+                    public void onSubscribe(Disposable disposable) {}
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(LOG_TAG, e.getLocalizedMessage(), e);
+                    }
+                    @Override
+                    public void onSuccess(Long noteId) {}
+                });
     }
  
-    public Completable update(final Note note) {
-        return Completable.create((CompletableEmitter emitter)->{
-            try {
-                noteDao.update(note);
-                if(!emitter.isDisposed())
-                    emitter.onComplete();
-            }catch (Throwable throwable){
-                if(!emitter.isDisposed())
-                    emitter.onError(throwable);
-            }
-        });
+    public void update(final Note note) {
+        noteDao.update(note)
+                .subscribeOn(Schedulers.io())
+                /*.observeOn(AndroidSchedulers.mainThread())*/
+                .subscribe(new SingleObserver<Integer>() {
+                    @Override
+                    public void onSubscribe(Disposable disposable) {}
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(LOG_TAG, e.getLocalizedMessage(), e);
+                    }
+                    @Override
+                    public void onSuccess(Integer numberOfUpdatedNotes) {}
+                });
     }
  
-    public Completable delete(final Note note) {
-        return Completable.create((CompletableEmitter emitter)->{
-            try {
-                noteDao.delete(note);
-                if(!emitter.isDisposed())
-                    emitter.onComplete();
-            }catch (Throwable throwable){
-                if(!emitter.isDisposed())
-                    emitter.onError(throwable);
-            }
-        });
+    public void delete(final Note note) {
+        noteDao.delete(note)
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+                });
     }
  
-    public Completable deleteAllNotes() {
-        return Completable.create((CompletableEmitter emitter)->{
-            try {
-                noteDao.deleteAllNotes();
-                if(!emitter.isDisposed())
-                    emitter.onComplete();
-            }catch (Throwable throwable){
-                if(!emitter.isDisposed())
-                    emitter.onError(throwable);
-            }
-        });
+    public void deleteAllNotes() {
+        noteDao.deleteAllNotes()
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+                });
     }
 
-    public LiveData<Note> findByUuid(String uuid){
+    public Single<Note> findByUuid(String uuid){
         return noteDao.findByUuid(uuid);
     }
  

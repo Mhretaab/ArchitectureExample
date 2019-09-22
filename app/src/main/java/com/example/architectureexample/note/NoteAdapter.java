@@ -5,13 +5,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.architectureexample.R;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.architectureexample.R;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
     private List<Note> notes = new ArrayList<>();
@@ -31,6 +33,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
         holder.tvTitle.setText(currentNote.getTitle());
         holder.tvDescription.setText(currentNote.getDescription());
         holder.tvPriority.setText(String.valueOf(currentNote.getPriority()));
+        holder.tvDateCreated.setText(new SimpleDateFormat("YYYY-MM-dd").format(currentNote.getDateCreated()));
     }
 
     @Override
@@ -44,13 +47,14 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
     }
 
     class NoteHolder extends RecyclerView.ViewHolder{
-        private TextView tvTitle, tvDescription, tvPriority;
+        private TextView tvTitle, tvDescription, tvPriority, tvDateCreated;
 
         public NoteHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.text_view_title);
             tvDescription = itemView.findViewById(R.id.text_view_description);
             tvPriority = itemView.findViewById(R.id.text_view_priority);
+            tvDateCreated = itemView.findViewById(R.id.text_view_date_created);
         }
     }
 }

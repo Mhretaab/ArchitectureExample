@@ -1,24 +1,16 @@
 package com.example.architectureexample.note.ui.list;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.architectureexample.R;
 import com.example.architectureexample.note.Note;
@@ -26,7 +18,11 @@ import com.example.architectureexample.note.NoteAdapter;
 import com.example.architectureexample.note.NoteViewModel;
 
 import java.util.List;
-import java.util.UUID;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 
 public class NoteListFragment extends Fragment {
     private static final String LOG_TAG = NoteListFragment.class.getSimpleName();
@@ -71,9 +67,9 @@ public class NoteListFragment extends Fragment {
             adapter.setNotes(notes);
         });
 
-        noteViewModel.findByUuid(UUID.randomUUID().toString()).observe(this, (@NonNull Note note)->{
+        /*noteViewModel.findByUuid(UUID.randomUUID().toString()).observe(this, (@NonNull List<Note> notes)->{
 
-        });
+        });*/
     }
 
     @OnClick(R.id.button_add_note)

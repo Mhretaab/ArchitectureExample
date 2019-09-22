@@ -2,12 +2,12 @@ package com.example.architectureexample.note.ui.list;
 
 import android.os.Bundle;
 
-import com.example.architectureexample.R;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.example.architectureexample.R;
 
 public class NoteListActivity extends AppCompatActivity {
     private static final String LOG_TAG = NoteListActivity.class.getSimpleName();

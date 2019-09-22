@@ -37,6 +37,13 @@
             android:layout_below="@id/text_view_title"
             android:text="Description" />
 
+        <TextView
+            android:id="@+id/text_view_date_created"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_view_description"
+            android:text="2019-09-27" />
+
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>
