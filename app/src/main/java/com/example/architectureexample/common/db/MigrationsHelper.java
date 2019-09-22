@@ -30,6 +30,8 @@ public final class MigrationsHelper {
             database.execSQL("CREATE UNIQUE INDEX `index_user_email` ON `user` (`email`)");
             database.execSQL("CREATE INDEX `index_user_updated_by_user_id` ON `user` (`updated_by_user_id`)");
             database.execSQL("CREATE UNIQUE INDEX `index_user_uuid` ON `user` (`uuid`)");
+
+            database.execSQL("CREATE VIEW `note_detail` AS SELECT note.title, note.description, note.priority, user.first_name || user.last_name AS owner FROM note LEFT OUTER JOIN user ON user.id=note.user_id");
             database.endTransaction();
         }
     };
