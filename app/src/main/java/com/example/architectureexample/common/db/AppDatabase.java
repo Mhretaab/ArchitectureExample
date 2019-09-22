@@ -33,7 +33,7 @@ public abstract class AppDatabase extends RoomDatabase {
     private static final String LOG_TAG = AppDatabase.class.getSimpleName();
 
     public static final int DB_VERSION = 2;
-    public static final String DB_NAME = "app_database.db";
+    public static final String DB_NAME = "note_database.db";
 
     private static AppDatabase instance;
 
