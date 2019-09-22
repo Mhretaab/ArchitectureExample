@@ -9,9 +9,6 @@ public final class MigrationsHelper {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
 
-            database.beginTransaction();
-            database.execSQL("ALTER TABLE note_table RENAME TO note");
-
             database.execSQL("CREATE TABLE `user` (`first_name` TEXT, `last_name` TEXT, `email` TEXT, `password` TEXT, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `uuid` TEXT NOT NULL, `date_created` INTEGER NOT NULL, `date_updated` INTEGER NOT NULL, `created_by_user_id` INTEGER, `updated_by_user_id` INTEGER, `street` TEXT, `state` TEXT, `city` TEXT, `post_code` INTEGER, FOREIGN KEY(`created_by_user_id`) REFERENCES `user`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`updated_by_user_id`) REFERENCES `user`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )");
 
             database.execSQL("ALTER TABLE `note` RENAME TO `note_old`");
@@ -32,7 +29,6 @@ public final class MigrationsHelper {
             database.execSQL("CREATE UNIQUE INDEX `index_user_uuid` ON `user` (`uuid`)");
 
             database.execSQL("CREATE VIEW `note_detail` AS SELECT note.title, note.description, note.priority, user.first_name || user.last_name AS owner FROM note LEFT OUTER JOIN user ON user.id=note.user_id");
-            database.endTransaction();
         }
     };
 
