@@ -27,7 +27,7 @@ import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-@Database(entities = {Note.class, User.class}, views = {NoteDetail.class}, version = AppDatabase.DB_VERSION, exportSchema = false)
+@Database(entities = {Note.class, User.class}, views = {NoteDetail.class}, version = AppDatabase.DB_VERSION)
 @TypeConverters({DateConverter.class, ListConverter.NoteConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     private static final String LOG_TAG = AppDatabase.class.getSimpleName();

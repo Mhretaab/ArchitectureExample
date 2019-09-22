@@ -1,0 +1,322 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "b2697cc995b3ea9842bb3e31a8728e47",
+    "entities": [
+      {
+        "tableName": "note",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`title` TEXT, `description` TEXT, `priority` INTEGER NOT NULL, `user_id` INTEGER, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `uuid` TEXT NOT NULL, `date_created` INTEGER NOT NULL, `date_updated` INTEGER NOT NULL, `created_by_user_id` INTEGER, `updated_by_user_id` INTEGER, FOREIGN KEY(`user_id`) REFERENCES `user`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`created_by_user_id`) REFERENCES `user`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`updated_by_user_id`) REFERENCES `user`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "priority",
+            "columnName": "priority",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userId",
+            "columnName": "user_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "uuid",
+            "columnName": "uuid",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dateCreated",
+            "columnName": "date_created",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dateUpdated",
+            "columnName": "date_updated",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdByUserId",
+            "columnName": "created_by_user_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "updatedByUserId",
+            "columnName": "updated_by_user_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_note_uuid",
+            "unique": true,
+            "columnNames": [
+              "uuid"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_note_uuid` ON `${TABLE_NAME}` (`uuid`)"
+          },
+          {
+            "name": "index_note_title",
+            "unique": false,
+            "columnNames": [
+              "title"
+            ],
+            "createSql": "CREATE  INDEX `index_note_title` ON `${TABLE_NAME}` (`title`)"
+          },
+          {
+            "name": "index_note_user_id",
+            "unique": false,
+            "columnNames": [
+              "user_id"
+            ],
+            "createSql": "CREATE  INDEX `index_note_user_id` ON `${TABLE_NAME}` (`user_id`)"
+          },
+          {
+            "name": "index_note_created_by_user_id",
+            "unique": false,
+            "columnNames": [
+              "created_by_user_id"
+            ],
+            "createSql": "CREATE  INDEX `index_note_created_by_user_id` ON `${TABLE_NAME}` (`created_by_user_id`)"
+          },
+          {
+            "name": "index_note_updated_by_user_id",
+            "unique": false,
+            "columnNames": [
+              "updated_by_user_id"
+            ],
+            "createSql": "CREATE  INDEX `index_note_updated_by_user_id` ON `${TABLE_NAME}` (`updated_by_user_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "user",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "user_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "user",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "created_by_user_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "user",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "updated_by_user_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "user",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`first_name` TEXT, `last_name` TEXT, `email` TEXT, `password` TEXT, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `uuid` TEXT NOT NULL, `date_created` INTEGER NOT NULL, `date_updated` INTEGER NOT NULL, `created_by_user_id` INTEGER, `updated_by_user_id` INTEGER, `street` TEXT, `state` TEXT, `city` TEXT, `post_code` INTEGER, FOREIGN KEY(`created_by_user_id`) REFERENCES `user`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`updated_by_user_id`) REFERENCES `user`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "firstName",
+            "columnName": "first_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "lastName",
+            "columnName": "last_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "email",
+            "columnName": "email",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "password",
+            "columnName": "password",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "uuid",
+            "columnName": "uuid",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dateCreated",
+            "columnName": "date_created",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dateUpdated",
+            "columnName": "date_updated",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdByUserId",
+            "columnName": "created_by_user_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "updatedByUserId",
+            "columnName": "updated_by_user_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "address.street",
+            "columnName": "street",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "address.state",
+            "columnName": "state",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "address.city",
+            "columnName": "city",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "address.postCode",
+            "columnName": "post_code",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_user_uuid",
+            "unique": true,
+            "columnNames": [
+              "uuid"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_user_uuid` ON `${TABLE_NAME}` (`uuid`)"
+          },
+          {
+            "name": "index_user_email",
+            "unique": true,
+            "columnNames": [
+              "email"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_user_email` ON `${TABLE_NAME}` (`email`)"
+          },
+          {
+            "name": "index_user_created_by_user_id",
+            "unique": false,
+            "columnNames": [
+              "created_by_user_id"
+            ],
+            "createSql": "CREATE  INDEX `index_user_created_by_user_id` ON `${TABLE_NAME}` (`created_by_user_id`)"
+          },
+          {
+            "name": "index_user_updated_by_user_id",
+            "unique": false,
+            "columnNames": [
+              "updated_by_user_id"
+            ],
+            "createSql": "CREATE  INDEX `index_user_updated_by_user_id` ON `${TABLE_NAME}` (`updated_by_user_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "user",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "created_by_user_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "user",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "updated_by_user_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      }
+    ],
+    "views": [
+      {
+        "viewName": "note_detail",
+        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT note.title, note.description, note.priority, user.first_name || user.last_name AS owner FROM note LEFT OUTER JOIN user ON user.id=note.user_id"
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b2697cc995b3ea9842bb3e31a8728e47')"
+    ]
+  }
+}

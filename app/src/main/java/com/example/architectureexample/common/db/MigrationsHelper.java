@@ -12,6 +12,8 @@ public final class MigrationsHelper {
 
             database.execSQL("CREATE TABLE `user` (`first_name` TEXT, `last_name` TEXT, `email` TEXT, `password` TEXT, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `uuid` TEXT NOT NULL, `date_created` INTEGER NOT NULL, `date_updated` INTEGER NOT NULL, `created_by_user_id` INTEGER, `updated_by_user_id` INTEGER, `street` TEXT, `state` TEXT, `city` TEXT, `post_code` INTEGER, FOREIGN KEY(`created_by_user_id`) REFERENCES `user`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`updated_by_user_id`) REFERENCES `user`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )");
 
+            database.execSQL("ALTER TABLE note ADD COLUMN date_created LONG");
+            database.execSQL("ALTER TABLE note ADD COLUMN date_updated LONG");
             database.execSQL("ALTER TABLE note ADD COLUMN created_by_user_id LONG REFERENCES user(id)");
             database.execSQL("ALTER TABLE note ADD COLUMN updated_by_user_id LONG REFERENCES user(id)");
 
