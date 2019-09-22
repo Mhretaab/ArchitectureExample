@@ -20,5 +20,5 @@ public final class MigrationsHelper {
         }
     };
 
-    public static Migration[] migrations = {MIGRATION_1_2};
+    public static final Migration[] ALL_MIGRATIONS = new Migration[]{MIGRATION_1_2};
 }
