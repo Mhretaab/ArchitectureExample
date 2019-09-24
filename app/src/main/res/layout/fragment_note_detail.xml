@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".note.ui.detail.NoteDetailFragment">
+    tools:context=".note.ui.detail.NoteDetailActivity">
 
     <EditText
         android:id="@+id/edit_text_title"
@@ -20,6 +20,15 @@
         android:layout_height="wrap_content"
         android:hint="Description"
         android:inputType="textMultiLine"/>
+
+    <!--<com.commonsware.cwac.richedit.RichEditText
+        android:id="@+id/rich_edit_text_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:gravity="top|left"
+        android:hint="Content"
+        android:inputType="textMultiLine" />-->
 
     <TextView
         android:layout_width="wrap_content"

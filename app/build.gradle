@@ -1,5 +1,11 @@
 apply plugin: 'com.android.application'
 
+repositories {
+    maven {
+        url "https://s3.amazonaws.com/repo.commonsware.com"
+    }
+}
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -59,4 +65,7 @@ dependencies {
 
     // Gson - for serialization / deserialization of some objects persisted in database
     implementation "com.google.code.gson:gson:2.8.0"
+
+    //text rich editor
+    implementation 'com.commonsware.cwac:richedit:0.5.3'
 }

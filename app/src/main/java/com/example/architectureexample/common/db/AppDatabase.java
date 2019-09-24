@@ -44,7 +44,7 @@ public abstract class AppDatabase extends RoomDatabase {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                     AppDatabase.class, DB_NAME)
-                    .addMigrations(MigrationsHelper.ALL_MIGRATIONS)
+                    .addMigrations(MigrationScripts.ALL_MIGRATIONS)
                     .addCallback(roomCallback)
                     .fallbackToDestructiveMigration()//permanently deletes all data from the database
                     .build();

@@ -17,6 +17,9 @@ public class NoteDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_detail);
 
+       getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
+        setTitle("Add Note");
+
         Fragment noteDetailFragment = new NoteDetailFragment();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();

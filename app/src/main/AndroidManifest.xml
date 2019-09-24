@@ -9,8 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".note.ui.detail.NoteDetailActivity"></activity>
-        <activity android:name=".note.ui.list.NoteListActivity" />
+        <activity android:name=".note.ui.detail.NoteDetailActivity"
+            android:parentActivityName=".note.ui.list.NoteListActivity">
+
+        </activity>
+        <activity android:name=".note.ui.list.NoteListActivity"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">

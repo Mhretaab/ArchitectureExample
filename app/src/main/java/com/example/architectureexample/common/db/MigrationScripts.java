@@ -3,7 +3,7 @@ package com.example.architectureexample.common.db;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-public final class MigrationsHelper {
+public final class MigrationScripts {
 
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override

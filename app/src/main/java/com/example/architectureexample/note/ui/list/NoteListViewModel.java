@@ -1,6 +1,9 @@
-package com.example.architectureexample.note;
+package com.example.architectureexample.note.ui.list;
 
 import android.app.Application;
+
+import com.example.architectureexample.note.Note;
+import com.example.architectureexample.note.NoteRepository;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -10,11 +13,11 @@ import java.util.List;
 
 import io.reactivex.Single;
 
-public class NoteViewModel extends AndroidViewModel {
+public class NoteListViewModel extends AndroidViewModel {
     private NoteRepository noteRepository;
     private LiveData<List<Note>> allNotes;
  
-    public NoteViewModel(@NonNull Application application) {
+    public NoteListViewModel(@NonNull Application application) {
         super(application);
         noteRepository = new NoteRepository(application);
         allNotes = noteRepository.getAllNotes();
