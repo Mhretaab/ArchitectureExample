@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -68,7 +69,8 @@ public class NoteListFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        //LinearLayoutManager
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         recyclerView.setHasFixedSize(true);
 
         final NoteAdapter adapter = new NoteAdapter();
