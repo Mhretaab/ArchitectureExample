@@ -38,6 +38,7 @@ public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase instance;
 
     public abstract NoteDao noteDao();
+
     public abstract UserDao userDao();
 
     public static synchronized AppDatabase getInstance(Context context) {
@@ -70,33 +71,39 @@ public abstract class AppDatabase extends RoomDatabase {
                     .subscribeOn(Schedulers.io())
                     /*.observeOn(AndroidSchedulers.mainThread())*/
                     .subscribe(new SingleObserver<Long>() {
-                @Override
-                public void onSubscribe(Disposable disposable) {}
+                        @Override
+                        public void onSubscribe(Disposable disposable) {
+                        }
 
-                @Override
-                public void onError(Throwable e) {
-                    Log.e(LOG_TAG, e.getLocalizedMessage(), e);
-                }
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.e(LOG_TAG, e.getLocalizedMessage(), e);
+                        }
 
-                @Override
-                public void onSuccess(Long userId) {
-                    Date dateCreated = new Date();
-                    Note n1 = new Note("Title 1", "Description 1", 1, userId, UUID.randomUUID().toString(), dateCreated, dateCreated, userId, userId);
-                    Note n2 = new Note("Title 2", "Description 2", 2, userId, UUID.randomUUID().toString(), dateCreated, dateCreated, userId, userId);
-                    Note n3 = new Note("Title 3", "Description 3", 3, userId, UUID.randomUUID().toString(), dateCreated, dateCreated, userId, userId);
+                        @Override
+                        public void onSuccess(Long userId) {
+                            Date dateCreated = new Date();
+                            Note n1 = new Note("Title 1", "Description 1", 1, userId, UUID.randomUUID().toString(), dateCreated, dateCreated, userId, userId);
+                            Note n2 = new Note("Title 2", "Description 2", 2, userId, UUID.randomUUID().toString(), dateCreated, dateCreated, userId, userId);
+                            Note n3 = new Note("Title 3", "Description 3", 3, userId, UUID.randomUUID().toString(), dateCreated, dateCreated, userId, userId);
 
-                    instance.noteDao().insertAll(new Note[]{n1, n2, n3})
-                            .subscribeOn(Schedulers.io())
-                            .subscribe(new CompletableObserver() {
-                                @Override
-                                public void onSubscribe(Disposable d) {}
-                                @Override
-                                public void onComplete() {}
-                                @Override
-                                public void onError(Throwable e) {}
-                            });
-                }
-            });
+                            instance.noteDao().insertAll(new Note[]{n1, n2, n3})
+                                    .subscribeOn(Schedulers.io())
+                                    .subscribe(new CompletableObserver() {
+                                        @Override
+                                        public void onSubscribe(Disposable d) {
+                                        }
+
+                                        @Override
+                                        public void onComplete() {
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable e) {
+                                        }
+                                    });
+                        }
+                    });
         }
     };
 

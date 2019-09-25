@@ -3,6 +3,7 @@ package com.example.architectureexample.note.ui.list;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,11 +34,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.reactivex.CompletableObserver;
+import io.reactivex.SingleObserver;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class NoteListFragment extends Fragment {
     private static final String LOG_TAG = NoteListFragment.class.getSimpleName();
 
     public static final int ADD_NOTE_REQUEST = 1;
+    public static final int EDIT_NOTE_REQUEST = 2;
 
     protected Unbinder unbinder;
 
@@ -95,6 +101,16 @@ public class NoteListFragment extends Fragment {
             }
         }).attachToRecyclerView(recyclerView);
 
+        adapter.setOnItemClickListener((note)->{
+            Intent intent = new Intent(getActivity(), NoteDetailActivity.class);
+            intent.putExtra(NoteDetailFragment.EXTRA_TITLE, note.getTitle());
+            intent.putExtra(NoteDetailFragment.EXTRA_DESCRIPTION, note.getDescription());
+            intent.putExtra(NoteDetailFragment.EXTRA_PRIORITY, note.getPriority());
+            intent.putExtra(NoteDetailFragment.EXTRA_UUID, note.getUuid());
+
+            getActivity().startActivityForResult(intent, EDIT_NOTE_REQUEST);
+        });
+
         /*noteListViewModel.findByUuid(UUID.randomUUID().toString()).observe(this, (@NonNull List<Note> notes)->{
 
         });*/
@@ -143,7 +159,43 @@ public class NoteListFragment extends Fragment {
             noteListViewModel.insert(note);
 
             Toast.makeText(getActivity(), "Note saved", Toast.LENGTH_SHORT).show();
-        } else {
+        }else if (requestCode == EDIT_NOTE_REQUEST && resultCode == Activity.RESULT_OK){
+
+            String uuid = data.getStringExtra(NoteDetailFragment.EXTRA_UUID);
+
+            if(uuid == null || uuid.trim().isEmpty()){
+                Toast.makeText(getActivity(), "Note cannot be updated", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            String title = data.getStringExtra(NoteDetailFragment.EXTRA_TITLE);
+            String description = data.getStringExtra(NoteDetailFragment.EXTRA_DESCRIPTION);
+            int priority = data.getIntExtra(NoteDetailFragment.EXTRA_PRIORITY, 1);
+
+            noteListViewModel.findByUuid(uuid)
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(new SingleObserver<Note>() {
+                        @Override
+                        public void onSubscribe(Disposable disposable) {
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.e(LOG_TAG, e.getLocalizedMessage(), e);
+                        }
+
+                        @Override
+                        public void onSuccess(Note note) {
+                            note.setTitle(title);
+                            note.setDescription(description);
+                            note.setPriority(priority);
+
+                            noteListViewModel.update(note);
+                            Toast.makeText(getActivity(), "Note updated", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+        } else if (requestCode == ADD_NOTE_REQUEST && resultCode == Activity.RESULT_CANCELED){
             Toast.makeText(getActivity(), "Note not saved", Toast.LENGTH_SHORT).show();
         }
     }

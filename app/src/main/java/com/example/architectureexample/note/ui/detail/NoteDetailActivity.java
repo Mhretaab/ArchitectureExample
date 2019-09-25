@@ -1,5 +1,6 @@
 package com.example.architectureexample.note.ui.detail;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,8 +18,14 @@ public class NoteDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_detail);
 
-       getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
-        setTitle("Add Note");
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
+
+        Intent intent = getIntent();
+        if(intent.hasExtra(NoteDetailFragment.EXTRA_UUID)){
+            setTitle("Edit Note");
+        }else {
+            setTitle("Add Note");
+        }
 
         Fragment noteDetailFragment = new NoteDetailFragment();
         FragmentManager fm = getSupportFragmentManager();

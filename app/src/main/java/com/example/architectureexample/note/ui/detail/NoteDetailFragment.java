@@ -32,6 +32,7 @@ public class NoteDetailFragment extends Fragment {
     public static final String EXTRA_TITLE = "com.example.architectureexample.note.ui.detail.EXTRA_TITLE";
     public static final String EXTRA_DESCRIPTION = "com.example.architectureexample.note.ui.detail.EXTRA_DESCRIPTION";
     public static final String EXTRA_PRIORITY = "com.example.architectureexample.note.ui.detail.EXTRA_PRIORITY";
+    public static final String EXTRA_UUID = "com.example.architectureexample.note.ui.detail.EXTRA_UUID";
 
     protected Unbinder unbinder;
 
@@ -75,6 +76,13 @@ public class NoteDetailFragment extends Fragment {
 
         numberPickerPriority.setMinValue(1);
         numberPickerPriority.setMaxValue(10);
+
+        Intent intent = getActivity().getIntent();
+        if(intent.hasExtra(EXTRA_UUID)){
+            editTextTitle.setText(intent.getStringExtra(EXTRA_TITLE));
+            editTextDescription.setText(intent.getStringExtra(EXTRA_DESCRIPTION));
+            numberPickerPriority.setValue(intent.getIntExtra(EXTRA_PRIORITY, 1));
+        }
     }
 
     @Override
@@ -117,6 +125,11 @@ public class NoteDetailFragment extends Fragment {
         data.putExtra(EXTRA_TITLE, title);
         data.putExtra(EXTRA_DESCRIPTION, description);
         data.putExtra(EXTRA_PRIORITY, priority);
+
+        String uuid = getActivity().getIntent().getStringExtra(EXTRA_UUID);
+        if(uuid != null && !uuid.trim().isEmpty()){
+            data.putExtra(EXTRA_UUID, uuid);
+        }
 
         getActivity().setResult(Activity.RESULT_OK, data);
         getActivity().finish();
