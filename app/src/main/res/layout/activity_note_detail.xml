@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".note.ui.list.NoteListActivity">
+    tools:context=".note.ui.detail.NoteDetailActivity">
 
     <LinearLayout
         android:id="@+id/fragment_note_detail"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="vertical"
-        tools:context=".note.ui.list.NoteListActivity" />
+        tools:context=".note.ui.detail.NoteDetailActivity" />
 
     <!--<fragment
         android:id="@+id/fragment_note_detail"

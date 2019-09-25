@@ -6,10 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".note.ui.list.NoteListActivity">
 
-    <fragment
+    <LinearLayout
         android:id="@+id/fragment_note_list"
-        android:name="com.example.architectureexample.note.ui.list.NoteListFragment"
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:orientation="vertical"
+        tools:context=".note.ui.list.NoteListActivity" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
