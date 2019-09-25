@@ -1,4 +1,4 @@
-package com.example.architectureexample.note;
+package com.example.architectureexample.note.ui.list;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.architectureexample.R;
+import com.example.architectureexample.note.Note;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
@@ -39,6 +39,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
     @Override
     public int getItemCount() {
         return notes.size();
+    }
+
+    public Note getNoteAt(int position){
+        return notes.get(position);
     }
 
     public void setNotes(List<Note> notes) {

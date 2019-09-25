@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -12,12 +15,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.architectureexample.R;
 import com.example.architectureexample.note.Note;
-import com.example.architectureexample.note.NoteAdapter;
 import com.example.architectureexample.note.ui.detail.NoteDetailActivity;
 import com.example.architectureexample.note.ui.detail.NoteDetailFragment;
 
@@ -54,7 +57,7 @@ public class NoteListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_note_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_note_list, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
@@ -62,6 +65,8 @@ public class NoteListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        setHasOptionsMenu(true);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
@@ -71,17 +76,54 @@ public class NoteListFragment extends Fragment {
 
         noteListViewModel = ViewModelProviders.of(this).get(NoteListViewModel.class);
 
-        noteListViewModel.getAllNotes().observe(this, (@Nullable List<Note> notes)->{
+        noteListViewModel.getAllNotes().observe(this, (@Nullable List<Note> notes) -> {
             adapter.setNotes(notes);
         });
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                noteListViewModel.delete(adapter.getNoteAt(viewHolder.getAdapterPosition()));
+                Toast.makeText(getActivity(), "Note deleted", Toast.LENGTH_LONG).show();
+            }
+        }).attachToRecyclerView(recyclerView);
 
         /*noteListViewModel.findByUuid(UUID.randomUUID().toString()).observe(this, (@NonNull List<Note> notes)->{
 
         });*/
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        inflater.inflate(R.menu.list_note_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.delete_all_notes:
+                deleteAllNotes();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
+    private void deleteAllNotes() {
+        noteListViewModel.deleteAllNotes();
+        Toast.makeText(getActivity(), "All notes deleted", Toast.LENGTH_LONG).show();
+    }
+
     @OnClick(R.id.button_add_note)
-    public void addNote(View view){
+    public void addNote(View view) {
         Intent intent = new Intent(getActivity(), NoteDetailActivity.class);
         getActivity().startActivityForResult(intent, ADD_NOTE_REQUEST);
     }
@@ -90,7 +132,7 @@ public class NoteListFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == ADD_NOTE_REQUEST && resultCode == Activity.RESULT_OK){
+        if (requestCode == ADD_NOTE_REQUEST && resultCode == Activity.RESULT_OK) {
             String title = data.getStringExtra(NoteDetailFragment.EXTRA_TITLE);
             String description = data.getStringExtra(NoteDetailFragment.EXTRA_DESCRIPTION);
             int priority = data.getIntExtra(NoteDetailFragment.EXTRA_PRIORITY, 1);
@@ -99,7 +141,7 @@ public class NoteListFragment extends Fragment {
             noteListViewModel.insert(note);
 
             Toast.makeText(getActivity(), "Note saved", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
             Toast.makeText(getActivity(), "Note not saved", Toast.LENGTH_SHORT).show();
         }
     }

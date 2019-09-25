@@ -24,6 +24,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+
+//TODO: need to have its own view model object
 public class NoteDetailFragment extends Fragment {
     private static final String LOG_TAG = NoteDetailFragment.class.getSimpleName();
 
